@@ -8,7 +8,11 @@ class SharedExt<T>(val context : Context , val key : String , val value : T , va
 String = "SharedPreferences")
     :ReadWriteProperty<Any?,T> {
 
-    //属性代理我们的SharedPreferences进行初始化，以后输入sp就相当于代理的初始化了。
+    //读写代理我们的SharedExt，第一个泛型参数是代理的类型，这里必须是实体不能使泛型，第二个为参数泛型，可以是实体可以是泛型
+
+
+    //懒加载  -》 适用于初始化val类型常量，一次初始化，不改变，多次使用。
+    //同时lazy也是一种属性委托，将SharedPreferences的初始化所生成的属性委托给sp
     private val sp by lazy{
         context.getSharedPreferences(defName,Context.MODE_PRIVATE)
     }
